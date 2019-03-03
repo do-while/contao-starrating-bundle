@@ -1,0 +1,49 @@
+<!--
+https://github.com/LunarLogic/starability
+-->
+<!-- indexer::stop -->
+<?php
+    $GLOBALS['TL_CSS']['starrating'] = 'bundles/srhinowcontaostarrating/starability/starability-minified/starability-basic.min.css';
+    $GLOBALS['TL_JAVASCRIPT']['starrating'] = 'bundles/srhinowcontaostarrating/js/script.js|static';
+    global $objPage;
+?>
+<?php if($this->isVoted): ?>
+    <div class="no-rating">
+    <p class="starability-result" data-rating="<?= (float) $this->stats['average']; ?>">
+        Bewertet: <?= (float) $this->stats['average']; ?> Sterne
+    </p>
+    </div>
+<?php else: ?>
+    <div class="rating">
+        <form type="post" action="/starrating/rating">
+            <input type="hidden" name="REQUEST_TOKEN" value="{{REQUEST_TOKEN}}">
+            <input type="hidden" name="pageID" value="<?=$objPage->id;?>">
+            <input type="hidden" name="settingID" value="<?=$this->settingId;?>">
+            <fieldset class="starability-basic">
+                <legend>Hat Ihnen der Inhalt gefallen?:</legend>
+                <input type="radio" id="rate1" name="rating" value="1" />
+                <label for="rate1" title="schlecht">1 Stern</label>
+
+                <input type="radio" id="rate2" name="rating" value="2" />
+                <label for="rate2" title="weniger gut">2 Sterne</label>
+
+                <input type="radio" id="rate3" name="rating" value="3" />
+                <label for="rate3" title="gut">3 Sterne</label>
+
+                <input type="radio" id="rate4" name="rating" value="4" />
+                <label for="rate4" title="sehr gut">4 Sterne</label>
+
+                <input type="radio" id="rate5" name="rating" value="5" />
+                <label for="rate5" title="großartig">5 Sterne</label>
+                
+            </fieldset>
+        </form>
+    </div>
+<?php endif; ?>
+<span class="rating-microdata" itemtype="http://schema.org/AggregateRating" itemscope itemprop="aggregateRating">
+        <meta itemprop="ratingValue" content="<?= (float) $this->stats['average']; ?>">
+        <meta itemprop="worstRating" content="<?= (int) $this->stats['min']; ?>">
+        <meta itemprop="bestRating" content="<?= (int) $this->stats['max']; ?>">
+        <meta itemprop="ratingCount" content="<?= (int) $this->stats['count']; ?>">
+</span>
+<!-- indexer::continue -->

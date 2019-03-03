@@ -1,0 +1,40 @@
+{
+  "name": "srhinow/contao-starrating-bundle",
+  "description": "Eine Sterne-bewertung die per Insert-tag an beliebiger Stelle positioniert wird und ab dem ersten Vote erst im Backend in einer Bewertungs-Verwaltung erscheint.",
+  "keywords": ["Bewertung","Sterne-Bewertung", "star", "rating","simple"],
+  "type": "contao-module",
+  "homepage": "https://gitlab.com/srhinow/contao-starrating-bundle",
+  "license": "LGPL-3.0-or-later",
+  "authors":[
+    {
+      "name":"Sven Rhinow",
+      "homepage":"https://www.sr-tag.de",
+      "role":"Developer"
+    }
+  ],
+  "support":{
+    "email": "sven@sr-tag.de",
+    "source":"https://gitlab.com/srhinow/contao-starrating-bundle"
+  },
+  "require": {
+    "php": ">=7.0",
+    "contao/core-bundle": "~3.5 || ~4.4",
+    "contao-community-alliance/composer-plugin":"~2.4 || ~3.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "Srhinow\\ContaoStarRatingBundle\\": "src/"
+    },
+    "classmap": [
+      "src/Resources/contao/"
+    ],
+    "exclude-from-classmap": [
+      "src/Resources/contao/config/",
+      "src/Resources/contao/languages/",
+      "src/Resources/contao/templates/"
+    ]
+  },
+  "extra": {
+    "contao-manager-plugin": "Srhinow\\ContaoStarRatingBundle\\ContaoManager\\Plugin"
+  }
+}
