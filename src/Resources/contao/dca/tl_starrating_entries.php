@@ -41,8 +41,8 @@ $GLOBALS['TL_DCA']['tl_starrating_entries'] = array
         ),
         'label' => array
         (
-            'fields'                  => array('vote','tstamp'),
-            'format'                  => 'Vote: %s  (%s)',
+            'fields'                  => array('vote','tstamp','token'),
+            'format'                  => 'Vote: %s  (%s) - Token: %s',
         ),
         'global_operations' => array
         (
