@@ -107,8 +107,9 @@ class InsertTagsListener
             $Template->stats = Helper::getStatisticsFromPage($objSrPage->id);
 
             //prüfen ob der aktuelle besuche die Seite schon bewertet hat
-            if(strlen($session['STARRATING_TOKEN']) > 0) {
-                $objIsVoted = SrhinowStarratingEntriesModel::findByPidAndToken($objSrPage->id,$session['STARRATING_TOKEN']);
+            $session = $_SESSION['STARRATING_TOKEN'];
+            if(strlen($session) > 0) {
+                $objIsVoted = SrhinowStarratingEntriesModel::findByPidAndToken($objSrPage->id,$session);
                 
                 if(null !== $objIsVoted) $Template->isVoted = true;
             }
