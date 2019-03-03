@@ -37,13 +37,10 @@ class AjaxRating
         if(strlen($params['u']) < 1) return new JsonResponse(['error'=>true,'errormsg'=>'Paramter "u" (URL) ist leer']);
         if((int) $params['s'] < 1) return new JsonResponse(['error'=>true,'errormsg'=>'Paramter "s" (SettingsId) ist leer']);
 
-        /** @var Symfony\Component\HttpFoundation\Session\SessionInterface $objSession */
-        $objSession = System::getContainer()->get('session');
-        $session = $objSession->all();
-
-        if(strlen($session['STARRATING_TOKEN']) < 1) $session['STARRATING_TOKEN'] = Helper::uniqidReal();
-
-        $objSession->replace($session);
+        session_start();
+        $session_token = $_SESSION['STARRATING_TOKEN'];
+        if(strlen($session_token) < 1) $session_token = Helper::uniqidReal();
+        $_SESSION['STARRATING_TOKEN'] = $session_token;
 
         $objSrPage = SrhinowStarratingPagesModel::findOneBy('pageId', $params['p']);
 
@@ -63,7 +60,8 @@ class AjaxRating
         }
 
         //Eintrag einfügen falls für den Besucher (Token) noch nicht vorhanden
-        $objEntry = SrhinowStarratingEntriesModel::findByPidAndToken($SrPageId, $session['STARRATING_TOKEN']);
+        $objEntry = SrhinowStarratingEntriesModel::findByPidAndToken($SrPageId, $session_token);
+        $newEntryId = 0;
         if(null === $objEntry) {
             $entryOptions =
                 [
@@ -71,17 +69,19 @@ class AjaxRating
                     'pid' => $SrPageId,
                     'vote' => $params['v'],
                     'setingId' => $params['s'],
-                    'token' => $session['STARRATING_TOKEN'],
+                    'token' => $session_token,
                     'url' => $params['u']
                 ];
 
             $newEntry = new SrhinowStarratingEntriesModel();
             $newEntry->setRow($entryOptions)->save();
+            $newEntryId = $newEntry->id;
+
         }
 
         // aktuelle Werte holen/berechnen
         $return = Helper::getStatisticsFromPage($SrPageId);
-
+        $return['new'] = ($newEntryId > 0)? true : false;
         return new JsonResponse($return);
     }
 }
