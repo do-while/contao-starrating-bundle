@@ -18,8 +18,18 @@ $(function() {
         var posting = $.post( url, { p: params } );
 
         // Put the results in a div
-        posting.done(function( data ) {
-            console.log(data);
+        posting.done(function( response ) {
+            // console.log($('.starability-result').data('rating'));
+            if(response.new) {
+                $('.rating').hide();
+                $('.no-rating').show();
+                $('.starability-result').data('rating',response.average);
+                $('.rating-microdata').find('[itemprop=ratingValue]').prop('content',response.average);
+                $('.rating-microdata').find('[itemprop=worstRating]').prop('content',response.min);
+                $('.rating-microdata').find('[itemprop=bestRating]').prop('content',response.max);
+                $('.rating-microdata').find('[itemprop=ratingCount]').prop('content',response.count);
+
+            }
         });
     });
     // console.log($('input[name=rating]'));
