@@ -36,7 +36,7 @@ class Helper
         if($count > 0) $arrReturn['count'] = $count;
 
         $objEntries = SrhinowStarratingEntriesModel::findBy('pid',$pageId);
-        if(null === $arrReturn) return $arrReturn;
+        if(null === $objEntries) return $arrReturn;
 
         while($objEntries->next()) {
             if($objEntries->vote > $arrReturn['max']) $arrReturn['max'] = $objEntries->vote;

@@ -42,13 +42,14 @@ class AjaxRating
         if(strlen($session_token) < 1) $session_token = Helper::uniqidReal();
         $_SESSION['STARRATING_TOKEN'] = $session_token;
 
-        $objSrPage = SrhinowStarratingPagesModel::findOneBy('pageId', $params['p']);
+        $objSrPage = SrhinowStarratingPagesModel::findOneBy('url', $params['u']);
 
         //wenn starating-page nicht exisitert -> neu anlegen
         if(null === $objSrPage) {
             $options = [
                 'tstamp' => time(),
-                'pageId' => $params['p']
+                'pageId' => $params['p'],
+                'url' => $params['u']
             ];
 
             $objNewPage = new SrhinowStarratingPagesModel();

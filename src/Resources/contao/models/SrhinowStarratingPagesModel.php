@@ -19,4 +19,19 @@ class SrhinowStarratingPagesModel extends Model
      * @var string
      */
     protected static $strTable = 'tl_starrating_pages';
+
+    public static function findByUrlAndToken($url, $token='', array $arrOptions=array())
+    {
+        if (empty($pid) || $token === '')
+        {
+            return null;
+        }
+
+        $t = static::$strTable;
+
+        $arrColumns[] = "$t.url ='" . $url."'";
+        $arrColumns[] = "$t.token='".$token."'";
+
+        return static::findOneBy($arrColumns, null, $arrOptions);
+    }
 }

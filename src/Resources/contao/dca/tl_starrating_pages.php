@@ -40,7 +40,7 @@ $GLOBALS['TL_DCA']['tl_starrating_pages'] = array
         ),
         'label' => array
         (
-            'fields'                  => array('pageId'),
+            'fields'                  => array('url'),
             'format'                  => '%s',
         ),
         'global_operations' => array
@@ -102,6 +102,15 @@ $GLOBALS['TL_DCA']['tl_starrating_pages'] = array
         ],
         'sorting' => [
             'sql'					  => "int(10) unsigned NOT NULL default '0'"
+        ],
+        'url' => [
+
+            'label'                   => &$GLOBALS['TL_LANG']['tl_starrating_entries']['url'],
+            'exclude'                 => true,
+            'search'                  => true,
+            'inputType'               => 'text',
+            'eval'                    => ['mandatory'=>true, 'maxlength'=>255,'tl_class'=>'full'],
+            'sql'                     => "varchar(255) NOT NULL default ''"
         ],
         'pageId' => [
             'label'                   => &$GLOBALS['TL_LANG']['tl_starrating_pages']['pageId'],

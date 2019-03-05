@@ -10,6 +10,7 @@
 namespace Srhinow\ContaoStarRatingBundle\EventListener;
 
 use Contao\CoreBundle\Framework\ContaoFrameworkInterface;
+use Contao\Environment;
 use Contao\FrontendTemplate;
 use Contao\System;
 use Srhinow\ContaoStarRatingBundle\Helper\Helper;
@@ -102,7 +103,8 @@ class InsertTagsListener
         $session = $objSession->all();
 
         // falls schon ein Eintrag zu dieser Seite existiert die Statistik holen
-        $objSrPage = SrhinowStarratingPagesModel::findOneBy('pageId', $objPage->id);
+        $url = Environment::get('url').Environment::get('requestUri');
+        $objSrPage = SrhinowStarratingPagesModel::findOneBy('url', $url);
         if(null !== $objSrPage) {
             $Template->stats = Helper::getStatisticsFromPage($objSrPage->id);
 
@@ -110,7 +112,7 @@ class InsertTagsListener
             $session = $_SESSION['STARRATING_TOKEN'];
             if(strlen($session) > 0) {
                 $objIsVoted = SrhinowStarratingEntriesModel::findByPidAndToken($objSrPage->id,$session);
-                
+
                 if(null !== $objIsVoted) $Template->isVoted = true;
             }
         }
