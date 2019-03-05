@@ -35,12 +35,14 @@ $GLOBALS['TL_DCA']['tl_starrating_settings'] = array
         (
             'mode'                    => 1,
             'fields'                  => array('title'),
+            'flag'					  => 1,
             'panelLayout'             => 'filter;search,limit'
         ),
         'label' => array
         (
             'fields'                  => array('title','alias'),
-            'format'                  => '%s (%s)',
+//            'fields'                  => array('title', 'url'),
+            'format'                  => '%s <span style="color:#b3b3b3; padding-left:3px;">[%s]</span>',
         ),
         'global_operations' => array
         (
