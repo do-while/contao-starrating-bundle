@@ -23,6 +23,7 @@ $(function() {
             if(response.new) {
                 $('.rating').hide();
                 $('.no-rating').show();
+                $('.average').text(response.average);
                 $('.starability-result').data('rating',response.average);
                 $('.rating-microdata').find('[itemprop=ratingValue]').prop('content',response.average);
                 $('.rating-microdata').find('[itemprop=worstRating]').prop('content',response.min);
