@@ -39,7 +39,7 @@ https://github.com/LunarLogic/starability
 </div>
 <span class="rating-microdata" itemtype="http://schema.org/AggregateRating" itemscope itemprop="aggregateRating">
         <meta itemprop="ratingValue" content="<?= number_format($this->stats['average'],1); ?>">
-        <meta itemprop="worstRating" content="<?= (int) $this->stats['min']; ?>">
+        <meta itemprop="worstRating" content="<?= (int) ($this->stats['min']<1)?1:$this->stats['min']; ?>">
         <meta itemprop="bestRating" content="<?= (int) $this->stats['max']; ?>">
         <meta itemprop="ratingCount" content="<?= (int) $this->stats['count']; ?>">
 </span>
