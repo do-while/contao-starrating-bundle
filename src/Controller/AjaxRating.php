@@ -82,6 +82,7 @@ class AjaxRating
 
         // aktuelle Werte holen/berechnen
         $return = Helper::getStatisticsFromPage($SrPageId);
+        $return['average'] = number_format($return['average'],2,',','.');
         $return['new'] = ($newEntryId > 0)? true : false;
         return new JsonResponse($return);
     }
