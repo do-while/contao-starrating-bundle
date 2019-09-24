@@ -3,13 +3,30 @@ https://github.com/LunarLogic/starability
 -->
 <!-- indexer::stop -->
 <?php
-    $GLOBALS['TL_CSS']['starrating'] = 'bundles/srhinowcontaostarrating/starability/starability-minified/starability-basic.min.css';
-    $GLOBALS['TL_JAVASCRIPT']['starrating'] = 'bundles/srhinowcontaostarrating/js/script.js|static';
-    global $objPage;
+global $objPage;
+$GLOBALS['TL_CSS']['starrating'] = 'files/preiswert_versichert/design/css/starability/css/preiswert_versichert.css';
+$GLOBALS['TL_JAVASCRIPT']['starrating'] = 'bundles/srhinowcontaostarrating/js/script.js|static';
+$GLOBALS['TL_HEAD']['starrating'] = '<script type="application/ld+json">
+                {
+                "@context": "http://schema.org/",
+                "@type": "Product",
+                "name": "'.$objPage->title.'",
+                "aggregateRating": {
+                "@type": "AggregateRating",
+                "ratingValue": "'.number_format($this->stats["average"],1).'",
+                "worstRating": "'.(($this->stats["min"]<1)? 1 :$this->stats["min"]).'",
+                "bestRating": "'.(int) $this->stats["max"].'",
+                "itemReviewed":"'.$objPage->title.'",
+                "ratingCount": "'. (int) $this->stats["count"].'"
+                }
+                }
+                </script>';
+
 ?>
 <div class="no-rating" style="display:<?=($this->isVoted)?'block':'none'; ?>;">
-    <p class="starability-result" data-rating="<?= round($this->stats['average']); ?>">
-        Bewertet: <?= number_format($this->stats['average'],1); ?> Sterne
+    <p>
+        Bewertet: <span class="average"><?= round($this->stats['average']); ?></span> Sterne
+        <span class="starability-result" data-rating="<?= round($this->stats['average']); ?>"></span>
     </p>
 </div>
 <div class="rating" style="display:<?=($this->isVoted)?'none':'block'; ?>;">
@@ -37,10 +54,4 @@ https://github.com/LunarLogic/starability
         </fieldset>
     </form>
 </div>
-<span class="rating-microdata" itemtype="http://schema.org/AggregateRating" itemscope itemprop="aggregateRating">
-        <meta itemprop="ratingValue" content="<?= number_format($this->stats['average'],1); ?>">
-        <meta itemprop="worstRating" content="<?= (int) ($this->stats['min']<1)?1:$this->stats['min']; ?>">
-        <meta itemprop="bestRating" content="<?= (int) $this->stats['max']; ?>">
-        <meta itemprop="ratingCount" content="<?= (int) $this->stats['count']; ?>">
-</span>
 <!-- indexer::continue -->
