@@ -1,6 +1,6 @@
-srhinow.contao_starrating:
+softleister.contao_starrating:
   path: /starrating/rating
   defaults:
     _scope: frontend
     _token_check: true
-    _controller: 'Srhinow\ContaoStarRatingBundle\Controller\AjaxRating'
+    _controller: 'Softleister\ContaoStarRatingBundle\Controller\AjaxRating'

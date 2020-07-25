@@ -4,12 +4,12 @@
  * @copyright 2018 Felix Pfeiffer : Neue Medien
  * @author    Felix Pfeiffer : Neue Medien
  * @author    Sven Rhinow
- * @package   contao-news-simple-bundle
+ * @package   contao-starrating-bundle
  * @license   LGPL-3.0-or-later
  *
  */
 
-namespace Srhinow\ContaoStarRatingBundle\DependencyInjection;
+namespace Softleister\ContaoStarRatingBundle\DependencyInjection;
 
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -21,7 +21,7 @@ use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
  *
  * @author Sven Rhinow <https://gitlab.com/srhinow>
  */
-class SrhinowContaoStarRatingBundleExtension extends Extension
+class SoftleisterContaoStarRatingBundleExtension extends Extension
 {
     /**
      * {@inheritdoc}

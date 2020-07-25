@@ -7,7 +7,7 @@
  *
  */
 
-namespace Srhinow\ContaoStarRatingBundle\Controller;
+namespace Softleister\ContaoStarRatingBundle\Controller;
 
 
 use Contao\CoreBundle\Exception\PageNotFoundException;
@@ -15,9 +15,9 @@ use Contao\Input;
 use Contao\Session;
 use Contao\System;
 use GuzzleHttp\Exception\RequestException;
-use Srhinow\ContaoStarRatingBundle\Helper\Helper;
-use Srhinow\ContaoStarRatingBundle\Model\SrhinowStarratingEntriesModel;
-use Srhinow\ContaoStarRatingBundle\Model\SrhinowStarratingPagesModel;
+use Softleister\ContaoStarRatingBundle\Helper\Helper;
+use Softleister\ContaoStarRatingBundle\Model\SoftleisterStarratingEntriesModel;
+use Softleister\ContaoStarRatingBundle\Model\SoftleisterStarratingPagesModel;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -42,7 +42,7 @@ class AjaxRating
         if(strlen($session_token) < 1) $session_token = Helper::uniqidReal();
         $_SESSION['STARRATING_TOKEN'] = $session_token;
 
-        $objSrPage = SrhinowStarratingPagesModel::findOneBy('url', $params['u']);
+        $objSrPage = SoftleisterStarratingPagesModel::findOneBy('url', $params['u']);
 
         //wenn starating-page nicht exisitert -> neu anlegen
         if(null === $objSrPage) {
@@ -52,7 +52,7 @@ class AjaxRating
                 'url' => $params['u']
             ];
 
-            $objNewPage = new SrhinowStarratingPagesModel();
+            $objNewPage = new SoftleisterStarratingPagesModel();
             $objNewPage->setRow($options);
             $objNewPage->save();
             $SrPageId = $objNewPage->id;
@@ -61,7 +61,7 @@ class AjaxRating
         }
 
         //Eintrag einfügen falls für den Besucher (Token) noch nicht vorhanden
-        $objEntry = SrhinowStarratingEntriesModel::findByPidAndToken($SrPageId, $session_token);
+        $objEntry = SoftleisterStarratingEntriesModel::findByPidAndToken($SrPageId, $session_token);
         $newEntryId = 0;
         if(null === $objEntry) {
             $entryOptions =
@@ -74,10 +74,9 @@ class AjaxRating
                     'url' => $params['u']
                 ];
 
-            $newEntry = new SrhinowStarratingEntriesModel();
+            $newEntry = new SoftleisterStarratingEntriesModel();
             $newEntry->setRow($entryOptions)->save();
             $newEntryId = $newEntry->id;
-
         }
 
         // aktuelle Werte holen/berechnen

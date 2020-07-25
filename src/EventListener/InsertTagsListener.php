@@ -2,24 +2,25 @@
 
 /**
  * @author    Sven Rhinow
+ * @author    Softleister - Hagen Klemp
  * @package   contao-starrrating-bundle
  * @license   LGPL-3.0-or-later
  *
  */
 
-namespace Srhinow\ContaoStarRatingBundle\EventListener;
+namespace Softleister\ContaoStarRatingBundle\EventListener;
 
 use Contao\CoreBundle\Framework\ContaoFrameworkInterface;
 use Contao\Environment;
 use Contao\FrontendTemplate;
 use Contao\System;
-use Srhinow\ContaoStarRatingBundle\Helper\Helper;
-use Srhinow\ContaoStarRatingBundle\Model\SrhinowStarratingEntriesModel;
-use Srhinow\ContaoStarRatingBundle\Model\SrhinowStarratingPagesModel;
-use Srhinow\ContaoStarRatingBundle\Model\SrhinowStarratingSettingsModel;
+use Softleister\ContaoStarRatingBundle\Helper\Helper;
+use Softleister\ContaoStarRatingBundle\Model\SoftleisterStarratingEntriesModel;
+use Softleister\ContaoStarRatingBundle\Model\SoftleisterStarratingPagesModel;
+use Softleister\ContaoStarRatingBundle\Model\SoftleisterStarratingSettingsModel;
 
-//use Srhinow\ThemeSectionArticleModel;
-//use Srhinow\ModuleThemeArticle;
+//use Softleister\ThemeSectionArticleModel;
+//use Softleister\ModuleThemeArticle;
 
 /**
  * Handles insert tags for news.
@@ -84,8 +85,8 @@ class InsertTagsListener
         global $objPage;
         $this->framework->initialize();
 
-        /** @var SrhinowStarratingSettingsModel $adapter */
-        $adapter = $this->framework->getAdapter(SrhinowStarratingSettingsModel::class);
+        /** @var SoftleisterStarratingSettingsModel $adapter */
+        $adapter = $this->framework->getAdapter(SoftleisterStarratingSettingsModel::class);
 
         if (null === ($objRow = $adapter->findByIdOrAlias($idOrAlias))) {
             return '';
@@ -104,14 +105,14 @@ class InsertTagsListener
 
         // falls schon ein Eintrag zu dieser Seite existiert die Statistik holen
         $url = Environment::get('url').Environment::get('requestUri');
-        $objSrPage = SrhinowStarratingPagesModel::findOneBy('url', $url);
+        $objSrPage = SoftleisterStarratingPagesModel::findOneBy('url', $url);
         if(null !== $objSrPage) {
             $Template->stats = Helper::getStatisticsFromPage($objSrPage->id);
 
             //prüfen ob der aktuelle besuche die Seite schon bewertet hat
             $session = $_SESSION['STARRATING_TOKEN'];
             if(strlen($session) > 0) {
-                $objIsVoted = SrhinowStarratingEntriesModel::findByPidAndToken($objSrPage->id,$session);
+                $objIsVoted = SoftleisterStarratingEntriesModel::findByPidAndToken($objSrPage->id,$session);
 
                 if(null !== $objIsVoted) $Template->isVoted = true;
             }

@@ -27,9 +27,9 @@ $GLOBALS['BE_MOD']['starrating'] = array
 /**
  * Models
  */
-$GLOBALS['TL_MODELS']['tl_starrating_pages'] = \Srhinow\ContaoStarRatingBundle\Model\SrhinowStarratingPagesModel::class;
-$GLOBALS['TL_MODELS']['tl_starrating_entries'] = \Srhinow\ContaoStarRatingBundle\Model\SrhinowStarratingEntriesModel::class;
-$GLOBALS['TL_MODELS']['tl_starrating_settings'] = \Srhinow\ContaoStarRatingBundle\Model\SrhinowStarratingSettingsModel::class;
+$GLOBALS['TL_MODELS']['tl_starrating_pages'] = \Softleister\ContaoStarRatingBundle\Model\SoftleisterStarratingPagesModel::class;
+$GLOBALS['TL_MODELS']['tl_starrating_entries'] = \Softleister\ContaoStarRatingBundle\Model\SoftleisterStarratingEntriesModel::class;
+$GLOBALS['TL_MODELS']['tl_starrating_settings'] = \Softleister\ContaoStarRatingBundle\Model\SoftleisterStarratingSettingsModel::class;
 
 /**
  * HOOKS
@@ -50,4 +50,4 @@ $GLOBALS['TL_MODELS']['tl_starrating_settings'] = \Srhinow\ContaoStarRatingBundl
  * source code by registering callback functions to be executed on a particular
  * event. For more information see https://contao.org/manual.html.
  */
-$GLOBALS['TL_HOOKS']['replaceInsertTags'][] = array('srhinow_starrating.listener.insert_tags','onReplaceInsertTags');
+$GLOBALS['TL_HOOKS']['replaceInsertTags'][] = array('softleister_starrating.listener.insert_tags','onReplaceInsertTags');

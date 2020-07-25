@@ -7,14 +7,14 @@
  * @filesource
  */
 
-namespace Srhinow\ContaoStarRatingBundle\EventListener\Dca;
+namespace Softleister\ContaoStarRatingBundle\EventListener\Dca;
 
 use Contao\Backend;
 use Contao\DataContainer;
 use Contao\StringUtil;
 use Symfony\Component\Config\Definition\Exception\Exception;
 
-class SrhinowStarratingSettings extends Backend
+class SoftleisterStarratingSettings extends Backend
 {
     /**
      * Import the back end user object

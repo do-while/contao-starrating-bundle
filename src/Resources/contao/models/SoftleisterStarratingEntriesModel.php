@@ -7,12 +7,12 @@
  * @filesource
  */
 
-namespace Srhinow\ContaoStarRatingBundle\Model;
+namespace Softleister\ContaoStarRatingBundle\Model;
 
 
 use Contao\Model;
 
-class SrhinowStarratingEntriesModel extends Model
+class SoftleisterStarratingEntriesModel extends Model
 {
     /**
      * Table name

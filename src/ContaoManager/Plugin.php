@@ -7,7 +7,7 @@
  *
  */
 
-namespace Srhinow\ContaoStarRatingBundle\ContaoManager;
+namespace Softleister\ContaoStarRatingBundle\ContaoManager;
 
 use Contao\CoreBundle\ContaoCoreBundle;
 use Contao\ManagerPlugin\Bundle\Config\BundleConfig;
@@ -15,7 +15,7 @@ use Contao\ManagerPlugin\Bundle\BundlePluginInterface;
 use Contao\ManagerPlugin\Bundle\Parser\ParserInterface;
 
 use Contao\ManagerPlugin\Routing\RoutingPluginInterface;
-use Srhinow\ContaoStarRatingBundle\SrhinowContaoStarRatingBundle;
+use Softleister\ContaoStarRatingBundle\SoftleisterContaoStarRatingBundle;
 use Symfony\Component\Config\Loader\LoaderResolverInterface;
 use Symfony\Component\HttpKernel\KernelInterface;
 use Symfony\Component\Routing\RouteCollection;
@@ -33,7 +33,7 @@ final class Plugin implements BundlePluginInterface, RoutingPluginInterface
     public function getBundles(ParserInterface $parser)
     {
         return [
-            BundleConfig::create(SrhinowContaoStarRatingBundle::class)
+            BundleConfig::create(SoftleisterContaoStarRatingBundle::class)
                 ->setLoadAfter([ContaoCoreBundle::class])
         ];
     }

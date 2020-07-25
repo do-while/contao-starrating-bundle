@@ -1,6 +1,6 @@
 services:
-    srhinow_starrating.listener.insert_tags:
-        class: Srhinow\ContaoStarRatingBundle\EventListener\InsertTagsListener
+    softleister_starrating.listener.insert_tags:
+        class: Softleister\ContaoStarRatingBundle\EventListener\InsertTagsListener
         arguments:
             - "@contao.framework"
         public: true

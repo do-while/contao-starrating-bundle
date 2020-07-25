@@ -9,7 +9,7 @@
  *
  */
 
-namespace Srhinow\ContaoNewsSimpleBundle;
+namespace Softleister\ContaoNewsSimpleBundle;
 
 use Contao\Frontend;
 use Contao\FrontendTemplate;

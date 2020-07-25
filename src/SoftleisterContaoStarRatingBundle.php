@@ -8,13 +8,13 @@
  * @filesource
  */
 
-namespace Srhinow\ContaoStarRatingBundle;
+namespace Softleister\ContaoStarRatingBundle;
 
-use Srhinow\ContaoStarRatingBundle\DependencyInjection\SrhinowContaoStarRatingBundleExtension;
+use Softleister\ContaoStarRatingBundle\DependencyInjection\SoftleisterContaoStarRatingBundleExtension;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
-class SrhinowContaoStarRatingBundle extends Bundle
+class SoftleisterContaoStarRatingBundle extends Bundle
 {
     /**
      * Builds the bundle.
@@ -35,6 +35,6 @@ class SrhinowContaoStarRatingBundle extends Bundle
      */
     public function getContainerExtension()
     {
-        return new SrhinowContaoStarRatingBundleExtension();
+        return new SoftleisterContaoStarRatingBundleExtension();
     }
 }

@@ -7,10 +7,10 @@
  *
  */
 
-namespace Srhinow\ContaoStarRatingBundle\Helper;
+namespace Softleister\ContaoStarRatingBundle\Helper;
 
 
-use Srhinow\ContaoStarRatingBundle\Model\SrhinowStarratingEntriesModel;
+use Softleister\ContaoStarRatingBundle\Model\SoftleisterStarratingEntriesModel;
 
 class Helper
 {
@@ -32,10 +32,10 @@ class Helper
         $arrReturn = ['min' => 0, 'max'=>0, 'sum' => 0, 'average'=>0,'count'=>0];
         if((int) $pageId < 1) return $arrReturn;
 
-        $count = SrhinowStarratingEntriesModel::countVotesByPage($pageId);
+        $count = SoftleisterStarratingEntriesModel::countVotesByPage($pageId);
         if($count > 0) $arrReturn['count'] = $count;
 
-        $objEntries = SrhinowStarratingEntriesModel::findBy('pid',$pageId);
+        $objEntries = SoftleisterStarratingEntriesModel::findBy('pid',$pageId);
         if(null === $objEntries) return $arrReturn;
 
         while($objEntries->next()) {

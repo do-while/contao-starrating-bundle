@@ -5,3 +5,6 @@ Die Erweiterung bietet die Möglichkeit einfach per Inserttag eine Sterne-bewert
 
 Als zweiter Paramter wird die ID oder der Alias der Konfiguration benötigt.
 `{{starrating::ID | ALIAS}}`
+
+
+Original von Sven Rhinow:   https://gitlab.com/srhinow/contao-starrating-bundle

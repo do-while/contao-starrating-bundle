@@ -113,7 +113,7 @@ $GLOBALS['TL_DCA']['tl_starrating_settings'] = array
             'inputType'               => 'text',
             'eval'                    => ['rgxp'=>'alias', 'doNotCopy'=>true, 'unique'=>true, 'maxlength'=>128, 'tl_class'=>'w50'],
             'save_callback' => [
-                ['Srhinow\ContaoStarRatingBundle\EventListener\Dca\SrhinowStarratingSettings', 'generateAlias']
+                ['Softleister\ContaoStarRatingBundle\EventListener\Dca\SoftleisterStarratingSettings', 'generateAlias']
             ],
             'sql'                     => "varchar(128) COLLATE utf8_bin NOT NULL default ''"
         ],
@@ -140,7 +140,7 @@ $GLOBALS['TL_DCA']['tl_starrating_settings'] = array
             'default'                 => 'bbk_default',
             'exclude'                 => true,
             'inputType'               => 'select',
-            'options_callback'        => ['Srhinow\ContaoStarRatingBundle\EventListener\Dca\SrhinowStarratingSettings', 'getTemplates'],
+            'options_callback'        => ['Softleister\ContaoStarRatingBundle\EventListener\Dca\SoftleisterStarratingSettings', 'getTemplates'],
             'eval'                    => ['tl_class'=>'w50'],
             'sql'					  => "varchar(32) NOT NULL default ''"
         ]
