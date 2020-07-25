@@ -2,54 +2,54 @@
 <!-- https://github.com/LunarLogic/starability -->
 <?php
 global $objPage;
-$GLOBALS['TL_CSS']['starrating'] = 'bundles/softleistercontaostarrating/starability/starability-minified/starability-heart.min.css|static';
+$GLOBALS['TL_CSS']['starrating']        = 'bundles/softleistercontaostarrating/starability/starability-minified/starability-' . $this->mode . '.min.css|static';
+$GLOBALS['TL_CSS']['starview']          = 'bundles/softleistercontaostarrating/css/view.css|static';
 $GLOBALS['TL_JAVASCRIPT']['starrating'] = 'bundles/softleistercontaostarrating/js/script.js|static';
-$GLOBALS['TL_HEAD']['starrating'] = '<script type="application/ld+json">
+$GLOBALS['TL_HEAD']['starrating']       = '<script type="application/ld+json">
                 {
-                "@context": "http://schema.org/",
-                "@type": "Product",
-                "name": "'.$objPage->title.'",
-                "aggregateRating": {
-                "@type": "AggregateRating",
-                "ratingValue": "'.number_format($this->stats["average"],1).'",
-                "worstRating": "'.(($this->stats["min"]<1)? 1 :$this->stats["min"]).'",
-                "bestRating": "'.(int) $this->stats["max"].'",
-                "itemReviewed":"'.$objPage->title.'",
-                "ratingCount": "'. (int) $this->stats["count"].'"
-                }
+                    "@context": "http://schema.org/",
+                    "@type": "Product",
+                    "name": "' . $objPage->title . '",
+                    "aggregateRating": {
+                        "@type": "AggregateRating",
+                        "ratingValue": "' . number_format( $this->stats["average"], 1 ) . '",
+                        "worstRating": "' . ( ( $this->stats["min"] < 1 ) ? 1 : $this->stats["min"] ) . '",
+                        "bestRating": "' . (int) $this->stats["max"] . '",
+                        "itemReviewed":"' . $objPage->title . '",
+                        "ratingCount": "'. (int) $this->stats["count"] . '"
+                    }
                 }
                 </script>';
-
 ?>
-<div class="no-rating" style="display:<?=($this->isVoted)?'block':'none'; ?>;">
+<?php if($this->tag === 'starview'): ?>
+<span class="view-rating starability-result" data-rating="<?= round( $this->stats['average'] ); ?>"></span>
+<?php else: ?>
+<div class="no-rating" style="display:<?= ($this->isVoted) ? 'block' : 'none' ?>;">
     <p>
-        Bewertet: <span class="average"><?= round($this->stats['average']); ?></span> Sterne
-        <span class="starability-result" data-rating="<?= round($this->stats['average']); ?>"></span>
+        Bewertet: <span class="average"><?= round( $this->stats['average'] ); ?></span> Sterne
+        <span class="starability-result" data-rating="<?= round( $this->stats['average'] ); ?>"></span>
     </p>
 </div>
-<div class="rating" style="display:<?=($this->isVoted)?'none':'block'; ?>;">
+<div class="rating" style="display:<?= ($this->isVoted) ? 'none' : 'block'; ?>;">
     <form type="post" action="/starrating/rating">
         <input type="hidden" name="REQUEST_TOKEN" value="{{REQUEST_TOKEN}}">
         <input type="hidden" name="pageID" value="<?=$objPage->id;?>">
         <input type="hidden" name="settingID" value="<?=$this->settingId;?>">
-        <fieldset class="starability-basic">
-            <legend>Hat Ihnen der Inhalt gefallen?:</legend>
-            <input type="radio" id="rate1" name="rating" value="1" />
-            <label for="rate1" title="schlecht">1 Stern</label>
-
-            <input type="radio" id="rate2" name="rating" value="2" />
-            <label for="rate2" title="weniger gut">2 Sterne</label>
-
-            <input type="radio" id="rate3" name="rating" value="3" />
-            <label for="rate3" title="gut">3 Sterne</label>
-
-            <input type="radio" id="rate4" name="rating" value="4" />
-            <label for="rate4" title="sehr gut">4 Sterne</label>
-
-            <input type="radio" id="rate5" name="rating" value="5" />
-            <label for="rate5" title="großartig">5 Sterne</label>
-
-        </fieldset>
+        <fieldset class="starability-<?= $this->mode ?>">
+            <legend>bewerten:</legend>
+			<input type="radio" id="no-rate" class="input-no-rate" name="rating" value="0" checked aria-label="No rating." />
+			<input type="radio" id="first-rate1" name="rating" value="1" />
+			<label for="first-rate1" title="schlecht">1 star</label>
+			<input type="radio" id="first-rate2" name="rating" value="2" />
+			<label for="first-rate2" title="weniger gut">2 stars</label>
+			<input type="radio" id="first-rate3" name="rating" value="3" />
+			<label for="first-rate3" title="gut">3 stars</label>
+			<input type="radio" id="first-rate4" name="rating" value="4" />
+			<label for="first-rate4" title="sehr gut">4 stars</label>
+			<input type="radio" id="first-rate5" name="rating" value="5" />
+			<label for="first-rate5" title="großartig">5 stars</label>
+       </fieldset>
     </form>
 </div>
+<?php endif; ?>
 <!-- indexer::continue -->

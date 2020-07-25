@@ -39,6 +39,7 @@ class InsertTagsListener
      */
     private $supportedTags = [
         'starrating',
+        'starview',
     ];
 
     /**
@@ -46,7 +47,7 @@ class InsertTagsListener
      *
      * @param ContaoFrameworkInterface $framework
      */
-    public function __construct(ContaoFrameworkInterface $framework)
+    public function __construct( ContaoFrameworkInterface $framework )
     {
         $this->framework = $framework;
     }
@@ -58,16 +59,16 @@ class InsertTagsListener
      *
      * @return string|false
      */
-    public function onReplaceInsertTags($tag)
+    public function onReplaceInsertTags( $tag )
     {
-        $elements = explode('::', $tag);
-        $key = strtolower($elements[0]);
+        $elements = explode( '::', $tag );
+        $key = strtolower( $elements[0] );
+        $elements[] = '';                           // Element[2] ergänzen, wenn nicht vorhanden
 
-        if (\in_array($key, $this->supportedTags, true)) {
+        if( \in_array( $key, $this->supportedTags, true ) ) {
 
-            return $this->getStarratingStars($key, $elements[1]);
+            return $this->getStarratingStars( $key, $elements[1], $elements[2] );
         }
-
         return false;
     }
 
@@ -77,48 +78,60 @@ class InsertTagsListener
      *
      * @param string $insertTag
      * @param string $idOrAlias
+     * @param string $urlAlias
      *
      * @return string
      */
-    private function getStarratingStars($insertTag, $idOrAlias)
+    private function getStarratingStars( $insertTag, $idOrAlias, $urlAlias = '' )
     {
-        global $objPage;
-        $this->framework->initialize();
+        $this->framework->initialize( );
 
         /** @var SoftleisterStarratingSettingsModel $adapter */
-        $adapter = $this->framework->getAdapter(SoftleisterStarratingSettingsModel::class);
+        $adapter = $this->framework->getAdapter( SoftleisterStarratingSettingsModel::class );
 
-        if (null === ($objRow = $adapter->findByIdOrAlias($idOrAlias))) {
+        if( null === ( $objRow = $adapter->findByIdOrAlias( $idOrAlias ) ) ) {
             return '';
         }
 
-        $Template = new FrontendTemplate($objRow->fe_template);
+        $Template = new FrontendTemplate( $objRow->fe_template );
         $Template->settingId = $objRow->id;
+        $Template->mode      = $objRow->mode;
 
         //defaults
-        $Template->isVoted = false;
-        $Template->stats = [];
+        $Template->tag       = $insertTag;
+        $Template->isVoted   = false;
+        $Template->stats     = [];
 
         /** @var Symfony\Component\HttpFoundation\Session\SessionInterface $objSession */
-        $objSession = System::getContainer()->get('session');
-        $session = $objSession->all();
+        $objSession = System::getContainer( )->get( 'session' );
+        $session = $objSession->all( );
 
         // falls schon ein Eintrag zu dieser Seite existiert die Statistik holen
-        $url = Environment::get('url').Environment::get('requestUri');
-        $objSrPage = SoftleisterStarratingPagesModel::findOneBy('url', $url);
-        if(null !== $objSrPage) {
-            $Template->stats = Helper::getStatisticsFromPage($objSrPage->id);
+        $url = empty($urlAlias) ? \Environment::get( 'url' ) . \Environment::get( 'requestUri' ) : $urlAlias;
+        $Template->url = $url;
+        
+        $objSrPage = SoftleisterStarratingPagesModel::findOneBy( 'url', $url );
+        if( null !== $objSrPage ) {
+            
+            $Template->stats = Helper::getStatisticsFromPage( $objSrPage->id );
 
-            //prüfen ob der aktuelle besuche die Seite schon bewertet hat
-            $session = $_SESSION['STARRATING_TOKEN'];
-            if(strlen($session) > 0) {
-                $objIsVoted = SoftleisterStarratingEntriesModel::findByPidAndToken($objSrPage->id,$session);
+            if( $insertTag !== 'starrating' ) {
+                $Template->isVoted = true;                  // nur anzeigen
+            }
+            else {
+                //prüfen ob der aktuelle besuche die Seite schon bewertet hat
+                $session = $_SESSION['STARRATING_TOKEN'];
+                if( strlen( $session ) > 0 ) {
+                    $objIsVoted = SoftleisterStarratingEntriesModel::findByPidAndToken( $objSrPage->id, $session );
 
-                if(null !== $objIsVoted) $Template->isVoted = true;
+                    if( null !== $objIsVoted ) {
+                        $Template->isVoted = true;          // wurde bereits bewertet
+                    }
+                }
             }
         }
 
-        return $Template->parse();
+        return $Template->parse( );
     }
 
 }

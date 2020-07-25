@@ -2,6 +2,8 @@
 /**
  * @copyright  Sven Rhinow 2019
  * @author     sr-tag Sven Rhinow Webentwicklung <http://www.sr-tag.de>
+ *
+ * @author    Softleister - Hagen Klemp
  * @package    contao-starrating-bundle
  * @license   LGPL-3.0-or-later
  * @filesource
@@ -41,7 +43,6 @@ $GLOBALS['TL_DCA']['tl_starrating_settings'] = array
         'label' => array
         (
             'fields'                  => array('title','alias'),
-//            'fields'                  => array('title', 'url'),
             'format'                  => '%s <span style="color:#b3b3b3; padding-left:3px;">[%s]</span>',
         ),
         'global_operations' => array
@@ -83,7 +84,7 @@ $GLOBALS['TL_DCA']['tl_starrating_settings'] = array
     'palettes' => array
     (
         '__selector__'                => array(),
-        'default'                     => '{title_legend},title;{status_legend},published,status;{template_legend},fe_template;{notice_legend:hide},notice'
+        'default'                     => '{title_legend},title,alias;{template_legend},mode,fe_template;{publish_legend},published;{notice_legend:hide},notice'
     ),
 
     // Fields
@@ -98,7 +99,6 @@ $GLOBALS['TL_DCA']['tl_starrating_settings'] = array
             'sql'					  => "int(10) unsigned NOT NULL default '0'"
         ],
         'title' => [
-
             'label'                   => &$GLOBALS['TL_LANG']['tl_starrating_settings']['title'],
             'exclude'                 => true,
             'search'                  => true,
@@ -112,10 +112,32 @@ $GLOBALS['TL_DCA']['tl_starrating_settings'] = array
             'search'                  => true,
             'inputType'               => 'text',
             'eval'                    => ['rgxp'=>'alias', 'doNotCopy'=>true, 'unique'=>true, 'maxlength'=>128, 'tl_class'=>'w50'],
-            'save_callback' => [
-                ['Softleister\ContaoStarRatingBundle\EventListener\Dca\SoftleisterStarratingSettings', 'generateAlias']
-            ],
+			'save_callback'           => [
+                                            ['tl_starrating_settings', 'generateAlias']
+                                         ],
             'sql'                     => "varchar(128) COLLATE utf8_bin NOT NULL default ''"
+        ],
+        'mode' => [
+            'label'                   => &$GLOBALS['TL_LANG']['tl_starrating_settings']['mode'],
+            'default'                 => 'basic',
+            'exclude'                 => true,
+            'inputType'               => 'select',
+            'options'                 => ['basic', 'checkmark', 'coinFlip', 'fade', 'grow', 'growRotate', 'heart', 'heartbeat', 'rotate', 'slot'],
+			'reference'               => &$GLOBALS['TL_LANG']['tl_starrating_settings']['mode_'],
+			'eval'                    => array('mandatory'=>true, 'chosen'=>true, 'includeBlankOption'=>true, 'tl_class'=>'clr w50'),
+            'sql'					  => "varchar(16) NOT NULL default ''"
+        ],
+        'fe_template' => [
+            'label'                   => &$GLOBALS['TL_LANG']['tl_starrating_settings']['fe_template'],
+            'default'                 => 'starrating_default',
+            'exclude'                 => true,
+            'inputType'               => 'select',
+			'options_callback' => static function ()
+			{
+				return \Contao\Controller::getTemplateGroup( 'starrating_', [] );
+			},
+            'eval'                    => ['tl_class'=>'w50'],
+            'sql'					  => "varchar(32) NOT NULL default ''"
         ],
         'published' => [
             'label'                   => &$GLOBALS['TL_LANG']['tl_starrating_settings']['published'],
@@ -134,16 +156,51 @@ $GLOBALS['TL_DCA']['tl_starrating_settings'] = array
             'inputType'               => 'textarea',
             'eval'                    => ['mandatory'=>false, 'cols'=>'10', 'rows'=>'10', 'style'=>'height:100px', 'rte'=>false],
             'sql'					  => "text NULL"
-        ],
-        'fe_template' => [
-            'label'                   => &$GLOBALS['TL_LANG']['tl_module']['fe_template'],
-            'default'                 => 'bbk_default',
-            'exclude'                 => true,
-            'inputType'               => 'select',
-            'options_callback'        => ['Softleister\ContaoStarRatingBundle\EventListener\Dca\SoftleisterStarratingSettings', 'getTemplates'],
-            'eval'                    => ['tl_class'=>'w50'],
-            'sql'					  => "varchar(32) NOT NULL default ''"
         ]
     ]
 );
 
+/**
+ * Provide miscellaneous methods that are used by the data configuration array.
+ *
+ * @author Softleister
+ */
+class tl_starrating_settings extends \Contao\Backend
+{
+	/**
+	 * Import the back end user object
+	 */
+	public function __construct()
+	{
+		parent::__construct();
+		$this->import('\Contao\BackendUser', 'User');
+	}
+
+	/**
+	 * Auto-generate an article alias if it has not been set yet
+	 *
+	 * @param mixed                $varValue
+	 * @param Contao\DataContainer $dc
+	 *
+	 * @return string
+	 *
+	 * @throws Exception
+	 */
+	public function generateAlias( $varValue, \Contao\DataContainer $dc )
+	{
+		$aliasExists = function (string $alias) use ($dc): bool {
+			return $this->Database->prepare( "SELECT id FROM tl_starrating_settings WHERE alias=? AND id!=?" )->execute( $alias, $dc->id )->numRows > 0;
+		};
+
+		// Generate an alias if there is none
+		if( $varValue == '' ) {
+			$varValue = \Contao\System::getContainer()->get('contao.slug')->generate( $dc->activeRecord->title, $dc->activeRecord->id, $aliasExists );
+		}
+		else if( $aliasExists( $varValue ) ) {
+			throw new Exception( sprintf( $GLOBALS['TL_LANG']['ERR']['aliasExists'], $varValue ) );
+		}
+
+		return $varValue;
+	}
+
+}

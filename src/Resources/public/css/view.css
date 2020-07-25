@@ -1,0 +1,13 @@
+.view-rating.starability-result, 
+.view-rating.starability-result::after {
+    height: 15px;
+    background-size: 15px;
+}
+.view-rating.starability-result::after {
+    background-position: 0 -15px;
+}
+.view-rating.starability-result[data-rating="1"]::after { width: 15px; }
+.view-rating.starability-result[data-rating="2"]::after { width: 30px; }
+.view-rating.starability-result[data-rating="3"]::after { width: 45px; }
+.view-rating.starability-result[data-rating="4"]::after { width: 60px; }
+.view-rating.starability-result[data-rating="5"]::after { width: 75px; }
