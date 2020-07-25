@@ -1,10 +1,8 @@
-<!--
-https://github.com/LunarLogic/starability
--->
 <!-- indexer::stop -->
+<!-- https://github.com/LunarLogic/starability -->
 <?php
 global $objPage;
-$GLOBALS['TL_CSS']['starrating'] = 'files/preiswert_versichert/design/css/starability/css/preiswert_versichert.css';
+$GLOBALS['TL_CSS']['starrating'] = 'bundles/softleistercontaostarrating/starability/starability-minified/starability-heart.min.css|static';
 $GLOBALS['TL_JAVASCRIPT']['starrating'] = 'bundles/softleistercontaostarrating/js/script.js|static';
 $GLOBALS['TL_HEAD']['starrating'] = '<script type="application/ld+json">
                 {
