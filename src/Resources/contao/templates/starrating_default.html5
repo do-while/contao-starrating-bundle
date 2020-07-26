@@ -22,11 +22,11 @@ $GLOBALS['TL_HEAD']['starrating']       = '<script type="application/ld+json">
                 </script>';
 ?>
 <?php if($this->tag === 'starview'): ?>
-<span class="view-rating starability-result" data-rating="<?= round( $this->stats['average'] ); ?>"></span>
+<span class="view-rating starability-result" title="{{iflng::de}}Bewertung{{iflng::en}}Rating{{iflng}}: <?= round( $this->stats['average'] ); ?> {{iflng::de}}Sterne{{iflng::en}}Stars{{iflng}}" data-rating="<?= round( $this->stats['average'] ); ?>"></span>
 <?php else: ?>
 <div class="no-rating" style="display:<?= ($this->isVoted) ? 'block' : 'none' ?>;">
     <p>
-        Bewertet: <span class="average"><?= round( $this->stats['average'] ); ?></span> Sterne
+        <span class="result-text">{{iflng::de}}Gesamtbewertung{{iflng::en}}Rating summary{{iflng}}: <span class="average"><?= round($this->stats['average']) ?></span> {{iflng::de}}Sterne{{iflng::en}}Stars{{iflng}}</span>
         <span class="starability-result" data-rating="<?= round( $this->stats['average'] ); ?>"></span>
     </p>
 </div>
@@ -36,18 +36,18 @@ $GLOBALS['TL_HEAD']['starrating']       = '<script type="application/ld+json">
         <input type="hidden" name="pageID" value="<?=$objPage->id;?>">
         <input type="hidden" name="settingID" value="<?=$this->settingId;?>">
         <fieldset class="starability-<?= $this->mode ?>">
-            <legend>bewerten:</legend>
+            <legend>{{iflng::de}}Bitte bewerten Sie{{iflng::en}}Please rate{{iflng}}:</legend>
 			<input type="radio" id="no-rate" class="input-no-rate" name="rating" value="0" checked aria-label="No rating." />
 			<input type="radio" id="first-rate1" name="rating" value="1" />
-			<label for="first-rate1" title="schlecht">1 star</label>
+			<label for="first-rate1" title="{{iflng::de}}schlecht{{iflng::en}}Terrible{{iflng}}">1 star</label>
 			<input type="radio" id="first-rate2" name="rating" value="2" />
-			<label for="first-rate2" title="weniger gut">2 stars</label>
+			<label for="first-rate2" title="{{iflng::de}}weniger gut{{iflng::en}}Not good{{iflng}}">2 stars</label>
 			<input type="radio" id="first-rate3" name="rating" value="3" />
-			<label for="first-rate3" title="gut">3 stars</label>
+			<label for="first-rate3" title="{{iflng::de}}gut{{iflng::en}}Average{{iflng}}">3 stars</label>
 			<input type="radio" id="first-rate4" name="rating" value="4" />
-			<label for="first-rate4" title="sehr gut">4 stars</label>
+			<label for="first-rate4" title="{{iflng::de}}sehr gut{{iflng::en}}Very good{{iflng}}">4 stars</label>
 			<input type="radio" id="first-rate5" name="rating" value="5" />
-			<label for="first-rate5" title="großartig">5 stars</label>
+			<label for="first-rate5" title="{{iflng::de}}großartig{{iflng::en}}Amazing{{iflng}}">5 stars</label>
        </fieldset>
     </form>
 </div>

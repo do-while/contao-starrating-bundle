@@ -29,14 +29,14 @@ $GLOBALS['TL_LANG']['tl_starrating_settings']['notice_legend']   = 'Für Ihre No
 // References
 $GLOBALS['TL_LANG']['tl_starrating_settings']['mode_']['basic']      = 'Einfach';
 $GLOBALS['TL_LANG']['tl_starrating_settings']['mode_']['checkmark']  = 'Häkchen';
-$GLOBALS['TL_LANG']['tl_starrating_settings']['mode_']['coinFlip']   = 'Münzwurf';
-$GLOBALS['TL_LANG']['tl_starrating_settings']['mode_']['fade']       = 'Verblassen';
-$GLOBALS['TL_LANG']['tl_starrating_settings']['mode_']['grow']       = 'Anwachsen';
-$GLOBALS['TL_LANG']['tl_starrating_settings']['mode_']['growRotate'] = 'Anwachsen rotierend';
+$GLOBALS['TL_LANG']['tl_starrating_settings']['mode_']['coinFlip']   = 'Münzeinwurf';
+$GLOBALS['TL_LANG']['tl_starrating_settings']['mode_']['fade']       = 'Ausblenden';
+$GLOBALS['TL_LANG']['tl_starrating_settings']['mode_']['grow']       = 'Zoom';
+$GLOBALS['TL_LANG']['tl_starrating_settings']['mode_']['growRotate'] = 'Zoom rotierend';
 $GLOBALS['TL_LANG']['tl_starrating_settings']['mode_']['heart']      = 'Herz';
 $GLOBALS['TL_LANG']['tl_starrating_settings']['mode_']['heartbeat']  = 'Herzschlag';
 $GLOBALS['TL_LANG']['tl_starrating_settings']['mode_']['rotate']     = 'Drehend';
-$GLOBALS['TL_LANG']['tl_starrating_settings']['mode_']['slot']       = 'Einwurfschlitz';
+$GLOBALS['TL_LANG']['tl_starrating_settings']['mode_']['slot']       = 'Spielautomat';
 
 
 // Icon-Texte

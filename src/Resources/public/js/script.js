@@ -18,6 +18,8 @@ $(function() {
         // Send the data using post
         var posting = $.post( url, { p: params } );
 
+        setTimeout( function() {}, 700 );    // wait 700 ms
+
         // Put the results in a div
         posting.done(function( response ) {
             if(response.new) {

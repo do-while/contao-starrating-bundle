@@ -11,3 +11,4 @@
 .view-rating.starability-result[data-rating="3"]::after { width: 45px; }
 .view-rating.starability-result[data-rating="4"]::after { width: 60px; }
 .view-rating.starability-result[data-rating="5"]::after { width: 75px; }
+.rating fieldset { width: auto; }
